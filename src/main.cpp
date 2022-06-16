@@ -1,16 +1,16 @@
 #include <Arduino.h>
+#include <ESP32Servo.h>
 
-void setup()
-{
-  // put your setup code here, to run once:
-  pinMode(LED_BUILTIN, OUTPUT);
-  Serial.begin(115200);
+Servo servo; //Servoオブジェクトを作成
+
+void setup() {
+  servo.attach(15); //PWMの制御線をD15以外に接続している場合はここの数字を変更する
+
 }
 
-void loop()
-{
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(500);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(500);                       // wait for a second
+void loop() {
+  servo.write(20); //サーボモータの角度を20度に設定
+  delay(2000); //2秒待機
+  servo.write(160); //サーボモータの角度を160度に設定
+  delay(2000); //2秒待機
 }
