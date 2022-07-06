@@ -8,7 +8,6 @@
 #define SCK_PIN 18
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
-int count = 0;
 
 void setup()
 {
@@ -25,20 +24,15 @@ void setup()
 
 void loop()
 {
-  count ++;
   // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
   if (!mfrc522.PICC_IsNewCardPresent())
   {
-    Serial.print('A');
-    Serial.println(count);
     return;
   }
 
   // Select one of the cards
   if (!mfrc522.PICC_ReadCardSerial())
   {
-    Serial.print("B");
-    Serial.println(count);
     return;
   }
 
