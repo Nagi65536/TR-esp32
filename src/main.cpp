@@ -8,6 +8,14 @@
 #define SCK_PIN 18
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
+int count = 0;
+
+void dump_byte_array(byte *buffer, byte bufferSize) {
+  for (byte i = 0; i < bufferSize; i++) {
+    Serial.print(buffer[i] < 0x10 ? " 0" : " ");
+    Serial.print(buffer[i], HEX);
+  }
+}
 
 void setup()
 {
@@ -36,6 +44,8 @@ void loop()
     return;
   }
 
-  // Dump debug info about the card; PICC_HaltA() is automatically called
-  mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+  Serial.print(count);
+  dump_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size);
+  Serial.println();
+  count++;
 }
