@@ -36,7 +36,7 @@ void setup()
 void loop()
 {
   int count = 0;
-  char i[64];
+  char data[64];
 
   while (1)
   {
@@ -50,14 +50,11 @@ void loop()
     //パケットの受信
     if (wifiUdp.parsePacket())
     {
-      wifiUdp.read(i, 64);
+      wifiUdp.read(data, 64);
       remoteIP = wifiUdp.remoteIP();
       port = wifiUdp.remotePort();
-      Serial.print(remoteIP);
-      Serial.print(" / ");
-      Serial.print(port);
-      Serial.print(" / ");
-      Serial.println(i); // UDP通信で来た値を表示
+      Serial.print("data : ");
+      Serial.println(data); // UDP通信で来た値を表示
     }
 
     delay(3000);
