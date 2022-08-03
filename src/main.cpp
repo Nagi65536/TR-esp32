@@ -1,5 +1,6 @@
 #include <WiFi.h>
 #include <WiFiUDP.h>
+#include <ArduinoJson.h>
 
 const char ssid[] = "MeidenPad";       // TODO
 const char pass[] = "MeideniPad@0311"; // TODO
@@ -9,6 +10,7 @@ static const int raspberryPort = 9000; //送信先のポート
 
 IPAddress remoteIP; // 相手のIPアドレス
 int port;
+DynamicJsonDocument doc(1024);
 
 static void WiFi_setup()
 {
@@ -55,6 +57,16 @@ void loop()
       port = wifiUdp.remotePort();
       Serial.print("data : ");
       Serial.println(data); // UDP通信で来た値を表示
+
+      deserializeJson(doc, F(data));
+      JsonObject obj = doc.as<JsonObject>();
+      int car_id = obj[F("car_id")];
+      const char* start = obj[F("start")];
+
+      Serial.print(car_id);
+      Serial.print(" / ");
+      Serial.println(start);
+      Serial.println();
     }
 
     delay(3000);
